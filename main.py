@@ -1,8 +1,6 @@
 import json
-import urllib.parse
 import boto3
 import requests
-import os
 import time
 
 api_key = "db94967ec9dd601275593f8207eb3124"
@@ -42,8 +40,8 @@ def lambda_handler(event, context):
                 s3.upload_fileobj(f, "deploy-bucket-nn", "test_file_from_api_final")
                 last_run = int(time.time())
                 return "File was uploaded successfully!"
-        except:
-            return "File uploading failed."
+        except FileNotFoundError:
+            return "File not found. Uploading failed."
 
     # reading the contents of last_run from the bucket
     bucket_name = "deploy-bucket-nn"
